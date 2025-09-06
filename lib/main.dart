@@ -15,6 +15,7 @@ void main() async {
 
   // 🚨 CRITICAL: Custom error handling - DO NOT REMOVE
   ErrorWidget.builder = (FlutterErrorDetails details) {
+    debugPrint('Error: $details');
     return CustomErrorWidget(
       errorDetails: details,
     );
@@ -35,28 +36,45 @@ void main() async {
 
 Future<void> _initializeSupabase() async {
   try {
-    // Load environment variables
-    final envData = await _loadEnvData();
+    // Read environment variables injected at compile time
+    const url = String.fromEnvironment('SUPABASE_URL');
+    const anonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+
+    if (url.isEmpty || anonKey.isEmpty) {
+      debugPrint('❌ Supabase credentials not found.');
+      debugPrint(
+          '👉 Please pass them using --dart-define-from-file=env.json or manually via --dart-define.');
+      return;
+    }
 
     await Supabase.initialize(
-      url: envData['SUPABASE_URL'] ?? '',
-      anonKey: envData['SUPABASE_ANON_KEY'] ?? '',
-      debug: false, // Set to true for development debugging
+      url: url,
+      anonKey: anonKey,
+      debug: false, // set to true for verbose logging
     );
+
+    debugPrint('✅ Supabase initialized successfully');
   } catch (e) {
-    // Handle initialization error gracefully
-    debugPrint('Supabase initialization error: $e');
+    debugPrint('⚠️ Supabase initialization error: $e');
+    debugPrint('App will continue without Supabase authentication');
   }
 }
 
 Future<Map<String, String>> _loadEnvData() async {
   try {
-    // In a real app, you might want to use a package like flutter_dotenv
-    // For now, we'll use a simple approach with the existing env.json
-    final envFile = await rootBundle.loadString('env.json');
-    final Map<String, dynamic> envData = json.decode(envFile);
+    // Example keys from your env.json
+    const apiUrl = String.fromEnvironment('API_URL');
+    const apiKey = String.fromEnvironment('API_KEY');
+    const appEnv = String.fromEnvironment('APP_ENV');
 
-    return envData.map((key, value) => MapEntry(key, value.toString()));
+    final result = <String, String>{
+      'API_URL': apiUrl,
+      'API_KEY': apiKey,
+      'APP_ENV': appEnv,
+    };
+
+    debugPrint('Environment data loaded: ${result.keys.join(', ')}');
+    return result;
   } catch (e) {
     debugPrint('Error loading environment data: $e');
     return {};
@@ -83,11 +101,8 @@ class MyApp extends StatelessWidget {
         },
         // 🚨 END CRITICAL SECTION
         debugShowCheckedModeBanner: false,
-        home: const AuthGuard(
-          authenticatedChild: MainNavigationScreen(),
-          unauthenticatedChild: AuthenticationScreens(),
-        ),
         routes: AppRoutes.routes,
+        initialRoute: AppRoutes.initial,
       );
     });
   }

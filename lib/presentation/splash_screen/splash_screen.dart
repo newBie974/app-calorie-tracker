@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../core/app_export.dart';
 import '../../theme/app_theme.dart';
+import '../../routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -95,8 +97,16 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigateToNextScreen() {
-    // Check if user is authenticated, for now go to welcome
-    Navigator.pushReplacementNamed(context, '/welcome-screen');
+    final supabase = Supabase.instance.client;
+    final session = supabase.auth.currentSession;
+    
+    if (session != null) {
+      // User is authenticated
+      Navigator.pushReplacementNamed(context, AppRoutes.mainNavigation);
+    } else {
+      // User is not authenticated
+      Navigator.pushReplacementNamed(context, AppRoutes.welcome);
+    }
   }
 
   void _retryInitialization() {
