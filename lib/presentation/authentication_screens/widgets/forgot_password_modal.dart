@@ -113,9 +113,9 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
   void _validateEmail(String value) {
     setState(() {
       if (value.isEmpty) {
-        _emailError = 'Email is required';
+        _emailError = 'L\'adresse e-mail est requise';
       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-        _emailError = 'Please enter a valid email address';
+        _emailError = 'Veuillez saisir une adresse e-mail valide';
       } else {
         _emailError = null;
       }
@@ -136,25 +136,34 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
     setState(() => _isLoading = true);
 
     try {
-      // Mock password reset - replace with actual password reset logic
-      await Future.delayed(const Duration(seconds: 2));
+      // Use AuthService for password reset
+      final authService = AuthDI.authService;
+      final result =
+          await authService.resetPassword(_emailController.text.trim());
 
-      setState(() {
-        _emailSent = true;
-        _isLoading = false;
-      });
+      if (result.isSuccess) {
+        setState(() {
+          _emailSent = true;
+          _isLoading = false;
+        });
 
-      HapticFeedback.lightImpact();
+        HapticFeedback.lightImpact();
 
-      // Auto close modal after 3 seconds
-      Future.delayed(const Duration(seconds: 3), () {
-        if (mounted) {
-          Navigator.of(context).pop();
-        }
-      });
+        // Auto close modal after 3 seconds
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted) {
+            Navigator.of(context).pop();
+          }
+        });
+      } else {
+        setState(() => _isLoading = false);
+        _showErrorMessage(result.message ??
+            'Erreur lors de l\'envoi de l\'e-mail de réinitialisation');
+      }
     } catch (e) {
       setState(() => _isLoading = false);
-      _showErrorMessage('Failed to send reset email. Please try again.');
+      _showErrorMessage(
+          'Erreur lors de l\'envoi de l\'e-mail de réinitialisation. Veuillez réessayer.');
     }
   }
 
@@ -245,7 +254,9 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                       ),
                     Expanded(
                       child: Text(
-                        _emailSent ? 'Check Your Email!' : 'Reset Password',
+                        _emailSent
+                            ? 'Vérifiez votre e-mail !'
+                            : 'Réinitialiser le mot de passe',
                         style: GoogleFonts.inter(
                           fontSize: 24,
                           fontWeight: FontWeight.w700,
@@ -285,7 +296,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                       SizedBox(width: 3.w),
                       Expanded(
                         child: Text(
-                          'Enter your email address and we\'ll send you a secure link to reset your password.',
+                          'Saisissez votre adresse e-mail et nous vous enverrons un lien sécurisé pour réinitialiser votre mot de passe.',
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             color: AppTheme.accentBlue,
@@ -331,8 +342,8 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                             color: theme.colorScheme.onSurface,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Email Address',
-                            hintText: 'Enter your email',
+                            labelText: 'Adresse E-mail',
+                            hintText: 'Saisissez votre e-mail',
                             prefixIcon: Padding(
                               padding: EdgeInsets.all(4.w),
                               child: Icon(
@@ -440,7 +451,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Send Reset Link',
+                                  'Envoyer le lien',
                                   style: GoogleFonts.inter(
                                     fontSize: 16,
                                     color: _isFormValid && !_isLoading
@@ -502,7 +513,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                         child: Column(
                           children: [
                             Text(
-                              'Reset link sent successfully!',
+                              'Lien de réinitialisation envoyé !',
                               style: GoogleFonts.inter(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
@@ -512,7 +523,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                             ),
                             SizedBox(height: 2.h),
                             Text(
-                              'We\'ve sent a password reset link to:',
+                              'Nous avons envoyé un lien de réinitialisation à :',
                               style: GoogleFonts.inter(
                                 fontSize: 14,
                                 color: AppTheme.primaryGreenDark.withAlpha(204),
@@ -542,7 +553,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                             ),
                             SizedBox(height: 2.h),
                             Text(
-                              'Check your email and click the link to reset your password. This window will close automatically.',
+                              'Vérifiez votre e-mail et cliquez sur le lien pour réinitialiser votre mot de passe. Cette fenêtre se fermera automatiquement.',
                               style: GoogleFonts.inter(
                                 fontSize: 13,
                                 color: AppTheme.primaryGreenDark.withAlpha(179),

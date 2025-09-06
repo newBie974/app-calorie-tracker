@@ -162,17 +162,24 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
     setState(() => _isLoading = true);
 
     try {
-      // Mock registration - replace with actual registration logic
-      await Future.delayed(const Duration(seconds: 2));
+      // Create sign up request
+      final signUpRequest = SignUpRequest(
+        fullName: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        confirmPassword: _confirmPasswordController.text,
+      );
 
-      // Check if email already exists (mock check)
-      if (_emailController.text == 'existing@example.com') {
-        _showErrorMessage('Un compte avec cette adresse e-mail existe déjà.');
-        return;
+      // Perform registration using AuthService
+      final authService = AuthDI.authService;
+      final result = await authService.signUpWithEmail(signUpRequest);
+
+      if (result.isSuccess) {
+        HapticFeedback.lightImpact();
+        widget.onRegisterSuccess?.call();
+      } else {
+        _showErrorMessage(result.message ?? 'Erreur d\'inscription');
       }
-
-      HapticFeedback.lightImpact();
-      widget.onRegisterSuccess?.call();
     } catch (e) {
       _showErrorMessage('L\'inscription a échoué. Veuillez réessayer.');
     } finally {

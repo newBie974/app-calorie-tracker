@@ -102,20 +102,21 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
     setState(() => _isLoading = true);
 
     try {
-      // Mock authentication - replace with actual authentication logic
-      await Future.delayed(const Duration(seconds: 2));
+      // Create sign in request
+      final signInRequest = SignInRequest(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
 
-      // Mock credentials for testing
-      const mockEmail = 'user@example.com';
-      const mockPassword = 'password123';
+      // Perform authentication using AuthService
+      final authService = AuthDI.authService;
+      final result = await authService.signInWithEmail(signInRequest);
 
-      if (_emailController.text == mockEmail &&
-          _passwordController.text == mockPassword) {
+      if (result.isSuccess) {
         HapticFeedback.lightImpact();
         widget.onLoginSuccess?.call();
       } else {
-        _showErrorMessage(
-            'Adresse e-mail ou mot de passe incorrect. Veuillez réessayer.');
+        _showErrorMessage(result.message ?? 'Erreur de connexion');
       }
     } catch (e) {
       _showErrorMessage(
