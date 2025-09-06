@@ -64,9 +64,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
   void _validateEmail(String value) {
     setState(() {
       if (value.isEmpty) {
-        _emailError = 'Email is required';
+        _emailError = 'L\'adresse e-mail est requise';
       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-        _emailError = 'Please enter a valid email address';
+        _emailError = 'Veuillez saisir une adresse e-mail valide';
       } else {
         _emailError = null;
       }
@@ -76,9 +76,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
   void _validatePassword(String value) {
     setState(() {
       if (value.isEmpty) {
-        _passwordError = 'Password is required';
+        _passwordError = 'Le mot de passe est requis';
       } else if (value.length < 6) {
-        _passwordError = 'Password must be at least 6 characters';
+        _passwordError = 'Le mot de passe doit contenir au moins 6 caractères';
       } else {
         _passwordError = null;
       }
@@ -114,11 +114,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
         HapticFeedback.lightImpact();
         widget.onLoginSuccess?.call();
       } else {
-        _showErrorMessage('Invalid email or password. Please try again.');
+        _showErrorMessage(
+            'Adresse e-mail ou mot de passe incorrect. Veuillez réessayer.');
       }
     } catch (e) {
       _showErrorMessage(
-          'Network error. Please check your connection and try again.');
+          'Erreur réseau. Vérifiez votre connexion et réessayez.');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -203,8 +204,8 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
                     color: theme.colorScheme.onSurface,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Tape ton email',
+                    labelText: 'Adresse E-mail',
+                    hintText: 'Saisissez votre adresse e-mail',
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(4.w),
                       child: CustomIconWidget(
@@ -287,8 +288,8 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
                     color: theme.colorScheme.onSurface,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter your password',
+                    labelText: 'Mot de Passe',
+                    hintText: 'Saisissez votre mot de passe',
                     prefixIcon: Padding(
                       padding: EdgeInsets.all(4.w),
                       child: CustomIconWidget(
@@ -372,7 +373,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
                 ),
               ),
               child: Text(
-                'Mot de passe oublié ?',
+                'Mot de Passe Oublié ?',
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   color: AppTheme.primaryGreen,
@@ -437,7 +438,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Sign In',
+                            'Se Connecter',
                             style: GoogleFonts.inter(
                               fontSize: 16,
                               color: _isFormValid && !_isLoading
@@ -468,7 +469,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Don't have an account? ",
+                "Vous n'avez pas de compte ? ",
                 style: GoogleFonts.inter(
                   fontSize: 15,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -483,7 +484,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget>
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  'Sign Up',
+                  'S\'inscrire',
                   style: GoogleFonts.inter(
                     fontSize: 15,
                     color: AppTheme.primaryGreen,

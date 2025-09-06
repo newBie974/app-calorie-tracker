@@ -65,7 +65,7 @@ class IOSCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           style: theme.textTheme.labelLarge?.copyWith(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
-                            color: AppTheme.lightTheme.primaryColorLight,
+                            color: AppTheme.primaryLight,
                           ),
                         ),
                         SizedBox(width: 2.w),

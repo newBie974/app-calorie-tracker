@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/app_export.dart';
 import '../../theme/app_theme.dart';
@@ -24,6 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   late AnimationController _heroController;
   late AnimationController _contentController;
   late AnimationController _buttonsController;
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -97,6 +99,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     Navigator.pushReplacementNamed(context, '/home-dashboard');
   }
 
+  void _onDateSelected(DateTime date) {
+    setState(() {
+      _selectedDate = date;
+    });
+    HapticFeedback.selectionClick();
+  }
+
   @override
   void dispose() {
     _heroController.dispose();
@@ -119,15 +128,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         body: SafeArea(
           child: Column(
             children: [
-              // Hero illustration section - 60% of screen
+              // Hero illustration section - 35% of screen (reduced to make room for date picker)
               Expanded(
-                flex: 2,
+                flex: 40,
                 child: _buildHeroSection(),
               ),
 
               // Content and buttons section - 40% of screen
               Expanded(
-                flex: 3,
+                flex: 60,
                 child: _buildContentSection(),
               ),
             ],
@@ -136,6 +145,46 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       ),
     );
   }
+
+  /*Widget _buildDatePickerSection() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 4.w),
+      child: Column(
+        children: [
+          // Section title
+          Text(
+            'Choose Your Start Date',
+            style: GoogleFonts.inter(
+              fontSize: 4.w,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.textPrimary,
+            ),
+          ).animate(controller: _contentController).fadeIn(
+                duration: 500.ms,
+                delay: 300.ms,
+              ),
+
+          SizedBox(height: 2.h),
+
+          // Sliding date picker
+          Expanded(
+            child: SlidingHorizontalDatePicker(
+              onDateSelected: _onDateSelected,
+              backgroundColor: AppTheme.surfaceLight,
+              selectedColor: const Color(0xFFDFFF9C), // Pastel green from specs
+              todayColor: AppTheme.primaryGreen,
+            ).animate(controller: _contentController).slideY(
+                  begin: 0.5,
+                  end: 0,
+                  duration: 600.ms,
+                  delay: 400.ms,
+                  curve: Curves.easeOutBack,
+                ),
+          ),
+        ],
+      ),
+    );
+  }*/
 
   Widget _buildHeroSection() {
     return Container(
@@ -206,7 +255,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Center(
             child: Container(
               width: 70.w,
-              height: 25.h,
+              height: 35.h,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: CachedNetworkImage(
@@ -239,7 +288,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ),
                           SizedBox(height: 2.h),
                           Text(
-                            'Healthy Living',
+                            'Vie Saine',
                             style: GoogleFonts.inter(
                               fontSize: 5.w,
                               fontWeight: FontWeight.w600,
@@ -315,17 +364,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget _buildContentSection() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 6.w),
-      child: Container(
-        // physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            // Main heading and value proposition
-            Column(
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      child: Column(
+        children: [
+          // Main heading and value proposition
+          Expanded(
+            flex: 2,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome to Your\nNutrition Journey',
+                  'Bienvenue dans votre\nParcours Nutritionnel',
                   style: GoogleFonts.inter(
                     fontSize: 8.w,
                     fontWeight: FontWeight.w800,
@@ -345,13 +394,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       duration: 500.ms,
                       curve: Curves.easeOut,
                     ),
-                SizedBox(height: 2.h),
+                SizedBox(height: 1.h),
                 Text(
-                  'Track your meals, reach your goals, and build healthier habits with personalized insights.',
+                  _selectedDate != null
+                      ? 'Commencer votre parcours le ${_formatSelectedDate()} !'
+                      : 'Suivedz vos repas, atteignez vos objectifs et développez des habitudes plus saines.',
                   style: GoogleFonts.inter(
                     fontSize: 4.w,
                     fontWeight: FontWeight.w400,
-                    color: AppTheme.textSecondary,
+                    color: _selectedDate != null
+                        ? AppTheme.primaryGreen
+                        : AppTheme.textSecondary,
                     height: 1.4,
                   ),
                   textAlign: TextAlign.center,
@@ -361,11 +414,12 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ),
               ],
             ),
+          ),
 
-            SizedBox(height: 3.h),
-
-            // Action buttons
-            Column(
+          // Action buttons
+          Expanded(
+            flex: 2,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Primary button - Create Account
@@ -393,7 +447,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
                     child: Text(
-                      'Create Account',
+                      'Créer un Compte',
                       style: GoogleFonts.inter(
                         fontSize: 4.5.w,
                         fontWeight: FontWeight.w600,
@@ -431,7 +485,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
                     child: Text(
-                      'Log In',
+                      'Se Connecter',
                       style: GoogleFonts.inter(
                         fontSize: 4.5.w,
                         fontWeight: FontWeight.w600,
@@ -468,7 +522,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Continue as Guest',
+                        'Continuer en Invité',
                         style: GoogleFonts.inter(
                           fontSize: 3.8.w,
                           fontWeight: FontWeight.w500,
@@ -489,12 +543,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ),
               ],
             ),
-
-            // Add bottom padding to ensure content isn't cut off
-            SizedBox(height: 2.h),
-          ],
-        ),
+          ),
+        ],
       ),
     );
+  }
+
+  String _formatSelectedDate() {
+    if (_selectedDate == null) return '';
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final selectedDay =
+        DateTime(_selectedDate!.year, _selectedDate!.month, _selectedDate!.day);
+
+    if (selectedDay == today) {
+      return 'aujourd\'hui';
+    } else if (selectedDay == today.add(const Duration(days: 1))) {
+      return 'demain';
+    } else {
+      return DateFormat('d MMMM', 'fr').format(_selectedDate!);
+    }
   }
 }

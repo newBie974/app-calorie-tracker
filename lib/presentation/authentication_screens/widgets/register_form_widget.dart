@@ -87,9 +87,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
   void _validateName(String value) {
     setState(() {
       if (value.isEmpty) {
-        _nameError = 'Name is required';
+        _nameError = 'Le nom est requis';
       } else if (value.length < 2) {
-        _nameError = 'Name must be at least 2 characters';
+        _nameError = 'Le nom doit contenir au moins 2 caractères';
       } else {
         _nameError = null;
       }
@@ -99,9 +99,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
   void _validateEmail(String value) {
     setState(() {
       if (value.isEmpty) {
-        _emailError = 'Email is required';
+        _emailError = 'L\'adresse e-mail est requise';
       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-        _emailError = 'Please enter a valid email address';
+        _emailError = 'Veuillez saisir une adresse e-mail valide';
       } else {
         _emailError = null;
       }
@@ -111,11 +111,12 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
   void _validatePassword(String value) {
     setState(() {
       if (value.isEmpty) {
-        _passwordError = 'Password is required';
+        _passwordError = 'Le mot de passe est requis';
       } else if (value.length < 6) {
-        _passwordError = 'Password must be at least 6 characters';
+        _passwordError = 'Le mot de passe doit contenir au moins 6 caractères';
       } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*\d)').hasMatch(value)) {
-        _passwordError = 'Password must contain letters and numbers';
+        _passwordError =
+            'Le mot de passe doit contenir des lettres et des chiffres';
       } else {
         _passwordError = null;
       }
@@ -130,9 +131,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
   void _validateConfirmPassword(String value) {
     setState(() {
       if (value.isEmpty) {
-        _confirmPasswordError = 'Please confirm your password';
+        _confirmPasswordError = 'Veuillez confirmer votre mot de passe';
       } else if (value != _passwordController.text) {
-        _confirmPasswordError = 'Passwords do not match';
+        _confirmPasswordError = 'Les mots de passe ne correspondent pas';
       } else {
         _confirmPasswordError = null;
       }
@@ -166,14 +167,14 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
 
       // Check if email already exists (mock check)
       if (_emailController.text == 'existing@example.com') {
-        _showErrorMessage('An account with this email already exists.');
+        _showErrorMessage('Un compte avec cette adresse e-mail existe déjà.');
         return;
       }
 
       HapticFeedback.lightImpact();
       widget.onRegisterSuccess?.call();
     } catch (e) {
-      _showErrorMessage('Registration failed. Please try again.');
+      _showErrorMessage('L\'inscription a échoué. Veuillez réessayer.');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -333,8 +334,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
           // Name Field
           _buildInputField(
             controller: _nameController,
-            label: 'Full Name',
-            hint: 'Enter your full name',
+            label: 'Nom Complet',
+            hint: 'Saisissez votre nom complet',
             iconName: 'person',
             errorText: _nameError,
             onChanged: _validateName,
@@ -348,8 +349,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
           // Email Field
           _buildInputField(
             controller: _emailController,
-            label: 'Email Address',
-            hint: 'Enter your email',
+            label: 'Adresse E-mail',
+            hint: 'Saisissez votre adresse e-mail',
             iconName: 'email',
             errorText: _emailError,
             onChanged: _validateEmail,
@@ -362,8 +363,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
           // Password Field
           _buildInputField(
             controller: _passwordController,
-            label: 'Password',
-            hint: 'Create a strong password',
+            label: 'Mot de Passe',
+            hint: 'Créez un mot de passe fort',
             iconName: 'lock',
             errorText: _passwordError,
             onChanged: _validatePassword,
@@ -393,8 +394,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
           // Confirm Password Field
           _buildInputField(
             controller: _confirmPasswordController,
-            label: 'Confirm Password',
-            hint: 'Re-enter your password',
+            label: 'Confirmer le Mot de Passe',
+            hint: 'Ressaisissez votre mot de passe',
             iconName: 'lock',
             errorText: _confirmPasswordError,
             onChanged: _validateConfirmPassword,
@@ -487,10 +488,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
                               height: 1.4,
                             ),
                             children: [
-                              const TextSpan(
-                                  text: 'I agree to CalorieTracker\'s '),
+                              const TextSpan(text: 'J\'accepte les '),
                               TextSpan(
-                                text: 'Terms of Service',
+                                text: 'Conditions d\'Utilisation',
                                 style: GoogleFonts.inter(
                                   color: AppTheme.primaryGreen,
                                   fontWeight: FontWeight.w600,
@@ -499,9 +499,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
                                       AppTheme.primaryGreen.withAlpha(128),
                                 ),
                               ),
-                              const TextSpan(text: ' and '),
+                              const TextSpan(text: ' et la '),
                               TextSpan(
-                                text: 'Privacy Policy',
+                                text: 'Politique de Confidentialité',
                                 style: GoogleFonts.inter(
                                   color: AppTheme.primaryGreen,
                                   fontWeight: FontWeight.w600,
@@ -510,6 +510,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
                                       AppTheme.primaryGreen.withAlpha(128),
                                 ),
                               ),
+                              const TextSpan(text: ' de CalorieTracker'),
                             ],
                           ),
                         ),
@@ -574,7 +575,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Create Account',
+                            'Créer un Compte',
                             style: GoogleFonts.inter(
                               fontSize: 16,
                               color: _isFormValid && !_isLoading
@@ -605,7 +606,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Already have an account? ',
+                'Vous avez déjà un compte ? ',
                 style: GoogleFonts.inter(
                   fontSize: 15,
                   color: theme.colorScheme.onSurfaceVariant,
@@ -620,7 +621,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget>
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  'Sign In',
+                  'Se Connecter',
                   style: GoogleFonts.inter(
                     fontSize: 15,
                     color: AppTheme.primaryGreen,

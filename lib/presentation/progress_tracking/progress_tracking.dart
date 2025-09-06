@@ -3,7 +3,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_bottom_bar.dart';
 import '../../widgets/custom_icon_widget.dart';
 import './widgets/achievement_badges.dart';
 import './widgets/date_range_selector.dart';
@@ -208,13 +207,12 @@ class _ProgressTrackingState extends State<ProgressTracking>
                 child: StatisticsCards(selectedRange: selectedRange),
               ),
 
-              // Bottom padding
-              SliverToBoxAdapter(child: SizedBox(height: 10.h)),
+              // Bottom padding - reduced since no bottom nav
+              SliverToBoxAdapter(child: SizedBox(height: 5.h)),
             ],
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 2),
     );
   }
 }

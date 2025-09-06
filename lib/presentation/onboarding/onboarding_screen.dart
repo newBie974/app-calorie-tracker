@@ -232,7 +232,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Etape ${_currentPage + 1} sur 4',
+                  'Step ${_currentPage + 1} of 4',
                   style: GoogleFonts.inter(
                     fontSize: 3.5.w,
                     fontWeight: FontWeight.w500,
@@ -288,11 +288,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
         children: [
-          SizedBox(height: 3.h),
+          SizedBox(height: 4.h),
           Text(
-            'Quel est ton objectif?',
+            'What\'s your goal?',
             style: GoogleFonts.inter(
-              fontSize: 6.w,
+              fontSize: 8.w,
               fontWeight: FontWeight.w800,
               color: AppTheme.textPrimary,
             ),
@@ -303,7 +303,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               .slideY(begin: 0.3, end: 0, duration: 400.ms),
           SizedBox(height: 2.h),
           Text(
-            'Choisis ton objectif principal pour obtenir des recommandations personnalisées',
+            'Choose your primary nutrition goal to get personalized recommendations',
             style: GoogleFonts.inter(
               fontSize: 4.w,
               fontWeight: FontWeight.w400,
@@ -314,15 +314,15 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           )
               .animate(controller: _cardControllers[0])
               .fadeIn(duration: 400.ms, delay: 200.ms),
-          SizedBox(height: 5.h),
+          SizedBox(height: 6.h),
           Expanded(
             child: Column(
               children: [
                 _buildGoalCard(
                   goal: OnboardingGoal.lose,
                   icon: Icons.trending_down_rounded,
-                  title: 'Perdre du poids',
-                  subtitle: 'Créer un déficit calorique pour perdre du poids',
+                  title: 'Lose Weight',
+                  subtitle: 'Create a calorie deficit to shed pounds',
                   color: AppTheme.accentBlue,
                   gradient: AppTheme.blueGradient,
                 ),
@@ -330,9 +330,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 _buildGoalCard(
                   goal: OnboardingGoal.maintain,
                   icon: Icons.balance_rounded,
-                  title: 'Maintenir le poids',
-                  subtitle:
-                      'Maintenir ton poids actuel avec une alimentation équilibrée',
+                  title: 'Maintain Weight',
+                  subtitle: 'Keep your current weight with balanced nutrition',
                   color: AppTheme.primaryGreen,
                   gradient: AppTheme.primaryGradient,
                 ),
@@ -340,8 +339,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 _buildGoalCard(
                   goal: OnboardingGoal.gain,
                   icon: Icons.trending_up_rounded,
-                  title: 'Gagner du poids',
-                  subtitle: 'Construire de la masse musculaire',
+                  title: 'Gain Weight',
+                  subtitle: 'Build muscle and gain healthy weight',
                   color: AppTheme.accentPurple,
                   gradient: AppTheme.purpleGradient,
                 ),
@@ -474,7 +473,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           SizedBox(height: 4.h),
 
           Text(
-            'Dis nous qui est tu ?',
+            'Tell us about yourself',
             style: GoogleFonts.inter(
               fontSize: 8.w,
               fontWeight: FontWeight.w800,
@@ -490,7 +489,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
           // Gender selection
           Text(
-            'Sexe',
+            'Gender',
             style: GoogleFonts.inter(
               fontSize: 5.w,
               fontWeight: FontWeight.w600,
@@ -506,24 +505,24 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             children: [
               Expanded(
                 child:
-                    _buildGenderCard(Gender.male, 'Homme', Icons.male_rounded),
+                    _buildGenderCard(Gender.male, 'Male', Icons.male_rounded),
               ),
               SizedBox(width: 4.w),
               Expanded(
                 child: _buildGenderCard(
-                    Gender.female, 'Femme', Icons.female_rounded),
+                    Gender.female, 'Female', Icons.female_rounded),
               ),
               SizedBox(width: 4.w),
               Expanded(
                 child: _buildGenderCard(
-                    Gender.other, 'Autre', Icons.person_rounded),
+                    Gender.other, 'Other', Icons.person_rounded),
               ),
             ],
           )
               .animate(controller: _cardControllers[1])
               .fadeIn(duration: 400.ms, delay: 300.ms),
 
-          SizedBox(height: 5.h),
+          SizedBox(height: 6.h),
 
           // Age slider
           _buildSliderSection(
@@ -618,7 +617,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           SizedBox(height: 4.h),
 
           Text(
-            'Stats physique',
+            'Physical stats',
             style: GoogleFonts.inter(
               fontSize: 8.w,
               fontWeight: FontWeight.w800,
@@ -645,11 +644,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               .animate(controller: _cardControllers[2])
               .fadeIn(duration: 400.ms, delay: 200.ms),
 
-          SizedBox(height: 5.h),
+          SizedBox(height: 6.h),
 
           // Weight slider
           _buildSliderSection(
-            title: 'Poids',
+            title: 'Weight',
             value: _weight,
             min: 30,
             max: 200,
@@ -670,7 +669,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
           // Height slider
           _buildSliderSection(
-            title: 'Taille',
+            title: 'Height',
             value: _height,
             min: 120,
             max: 220,
@@ -780,7 +779,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           SizedBox(height: 4.h),
 
           Text(
-            'Ton objectif journalier',
+            'Your daily target',
             style: GoogleFonts.inter(
               fontSize: 8.w,
               fontWeight: FontWeight.w800,
@@ -792,7 +791,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               .fadeIn(duration: 400.ms)
               .slideY(begin: 0.3, end: 0, duration: 400.ms),
 
-          SizedBox(height: 3.h),
+          SizedBox(height: 6.h),
 
           // Animated calorie ring
           Container(
@@ -861,7 +860,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                           delay: 800.ms,
                         ),
                     Text(
-                      'calories / jour',
+                      'calories/day',
                       style: GoogleFonts.inter(
                         fontSize: 4.w,
                         fontWeight: FontWeight.w500,
@@ -883,7 +882,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 curve: Curves.easeOut,
               ),
 
-          SizedBox(height: 4.h),
+          SizedBox(height: 6.h),
 
           // Goal summary
           Container(
@@ -912,7 +911,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 ),
                 SizedBox(height: 1.h),
                 Text(
-                  'Super ! Ton objectif est parfaitement adapté pour t’aider à atteindre tes buts nutritionnels en toute sécurité 🚀',
+                  'Based on your stats, this target will help you achieve your nutrition goals safely and effectively.',
                   style: GoogleFonts.inter(
                     fontSize: 3.8.w,
                     fontWeight: FontWeight.w400,
@@ -943,12 +942,12 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   String _getGoalText() {
     switch (_selectedGoal) {
       case OnboardingGoal.lose:
-        return 'Perdre du poids';
+        return 'Lose Weight';
       case OnboardingGoal.gain:
-        return 'Prise de masse';
+        return 'Gain Weight';
       case OnboardingGoal.maintain:
       default:
-        return 'Maintenir mon poids';
+        return 'Maintain Weight';
     }
   }
 
@@ -974,7 +973,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 child: Text(
-                  'Retour',
+                  'Back',
                   style: GoogleFonts.inter(
                     fontSize: 4.w,
                     fontWeight: FontWeight.w600,
@@ -1015,7 +1014,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   ),
                 ),
                 child: Text(
-                  _currentPage == 3 ? 'Enregistrer' : 'Continue',
+                  _currentPage == 3 ? 'Complete Setup' : 'Continue',
                   style: GoogleFonts.inter(
                     fontSize: 4.5.w,
                     fontWeight: FontWeight.w600,

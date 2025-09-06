@@ -115,7 +115,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
       if (value.isEmpty) {
         _emailError = 'Email is required';
       } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-        _emailError = 'Entrez une adresse email valide';
+        _emailError = 'Please enter a valid email address';
       } else {
         _emailError = null;
       }
@@ -285,7 +285,7 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                       SizedBox(width: 3.w),
                       Expanded(
                         child: Text(
-                          'Tape ton e-mail et nous t\'enverrons un lien sécurisé pour réinitialiser ton mot de passe.',
+                          'Enter your email address and we\'ll send you a secure link to reset your password.',
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             color: AppTheme.accentBlue,
@@ -331,8 +331,8 @@ class _ForgotPasswordModalState extends State<ForgotPasswordModal>
                             color: theme.colorScheme.onSurface,
                           ),
                           decoration: InputDecoration(
-                            labelText: 'Email',
-                            hintText: 'Tape ton email',
+                            labelText: 'Email Address',
+                            hintText: 'Enter your email',
                             prefixIcon: Padding(
                               padding: EdgeInsets.all(4.w),
                               child: Icon(

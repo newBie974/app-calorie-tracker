@@ -4,7 +4,6 @@ import 'package:sizer/sizer.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_app_bar.dart';
-import '../../widgets/custom_bottom_bar.dart';
 import './widgets/custom_entry_widget.dart';
 import './widgets/favorites_section_widget.dart';
 import './widgets/meal_category_tabs_widget.dart';
@@ -254,7 +253,9 @@ class _FoodSearchAndLoggingState extends State<FoodSearchAndLogging> {
                       ),
                     ],
 
-                    SizedBox(height: 10.h), // Bottom padding for navigation
+                    SizedBox(
+                        height:
+                            5.h), // Reduced bottom padding since no bottom nav
                   ],
                 ),
               ),
@@ -262,7 +263,6 @@ class _FoodSearchAndLoggingState extends State<FoodSearchAndLogging> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomBar(currentIndex: 1),
       floatingActionButton: _loggedFoods.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: () {

@@ -31,13 +31,9 @@ class _CustomBottomBarState extends State<CustomBottomBar>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOut,
-    ));
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
   }
 
   @override
@@ -57,20 +53,7 @@ class _CustomBottomBarState extends State<CustomBottomBar>
       _animationController.reverse();
     });
 
-    // Navigate to appropriate route
-    final routes = [
-      '/home-dashboard',
-      '/food-search-and-logging',
-      '/progress-tracking',
-      '/qr-scanner',
-      '/ai-chat',
-    ];
-
-    if (index < routes.length) {
-      Navigator.pushNamed(context, routes[index]);
-    }
-
-    // Call external onTap if provided
+    // Call external onTap callback instead of navigating directly
     widget.onTap?.call(index);
   }
 
@@ -99,8 +82,10 @@ class _CustomBottomBarState extends State<CustomBottomBar>
             child: SafeArea(
               child: Container(
                 height: 80,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -176,18 +161,16 @@ class _CustomBottomBarState extends State<CustomBottomBar>
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 transitionBuilder: (child, animation) {
-                  return ScaleTransition(
-                    scale: animation,
-                    child: child,
-                  );
+                  return ScaleTransition(scale: animation, child: child);
                 },
                 child: Icon(
                   isSelected ? activeIcon : icon,
                   key: ValueKey(isSelected),
                   size: 24,
-                  color: isSelected
-                      ? colorScheme.primary
-                      : colorScheme.onSurfaceVariant,
+                  color:
+                      isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
                 ),
               ),
 
@@ -197,9 +180,10 @@ class _CustomBottomBarState extends State<CustomBottomBar>
                 AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 200),
                   style: theme.textTheme.labelSmall!.copyWith(
-                    color: isSelected
-                        ? colorScheme.primary
-                        : colorScheme.onSurfaceVariant,
+                    color:
+                        isSelected
+                            ? colorScheme.primary
+                            : colorScheme.onSurfaceVariant,
                     fontWeight: isSelected ? FontWeight.w500 : FontWeight.w400,
                   ),
                   child: Text(

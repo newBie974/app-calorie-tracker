@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 
-import '../core/app_export.dart';
-import '../widgets/custom_error_widget.dart';
+import './widgets/custom_error_widget.dart';
+import 'core/app_export.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,9 +14,12 @@ void main() async {
       errorDetails: details,
     );
   };
+
   // 🚨 CRITICAL: Device orientation lock - DO NOT REMOVE
   Future.wait([
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]),
+    // Enable full screen usage by hiding status bar when needed
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
   ]).then((value) {
     runApp(MyApp());
   });

@@ -81,7 +81,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
       await Future.delayed(const Duration(seconds: 2));
       widget.onGoogleLogin?.call();
     } catch (e) {
-      _showErrorMessage('Google Sign-In failed. Please try again.');
+      _showErrorMessage('La connexion Google a échoué. Veuillez réessayer.');
     } finally {
       if (mounted) {
         setState(() => _isGoogleLoading = false);
@@ -102,7 +102,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
       await Future.delayed(const Duration(seconds: 2));
       widget.onAppleLogin?.call();
     } catch (e) {
-      _showErrorMessage('Apple Sign-In failed. Please try again.');
+      _showErrorMessage('La connexion Apple a échoué. Veuillez réessayer.');
     } finally {
       if (mounted) {
         setState(() => _isAppleLoading = false);
@@ -183,7 +183,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  'OR',
+                  'OU',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: theme.colorScheme.onSurfaceVariant,
@@ -274,7 +274,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
                         ),
                   SizedBox(width: 4.w),
                   Text(
-                    _isGoogleLoading ? 'Connecting...' : 'Continue with Google',
+                    _isGoogleLoading ? 'Connexion...' : 'Continuer avec Google',
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       color: theme.colorScheme.onSurface,
@@ -347,7 +347,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
                         ),
                   SizedBox(width: 4.w),
                   Text(
-                    _isAppleLoading ? 'Connecting...' : 'Continue with Apple',
+                    _isAppleLoading ? 'Connexion...' : 'Continuer avec Apple',
                     style: GoogleFonts.inter(
                       fontSize: 16,
                       color: theme.brightness == Brightness.dark
@@ -390,7 +390,7 @@ class _SocialLoginWidgetState extends State<SocialLoginWidget>
               SizedBox(width: 3.w),
               Expanded(
                 child: Text(
-                  'Your data is protected with end-to-end encryption. We never share your information.',
+                  'Vos données sont protégées par un chiffrement de bout en bout. Nous ne partageons jamais vos informations.',
                   style: GoogleFonts.inter(
                     fontSize: 12,
                     color: theme.colorScheme.onSurfaceVariant,

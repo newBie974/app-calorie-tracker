@@ -151,7 +151,7 @@ class _AuthenticationScreensState extends State<AuthenticationScreens>
             ),
             SizedBox(width: 3.w),
             Text(
-              'Welcome back!',
+              'Bienvenue !',
               style: GoogleFonts.inter(
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
@@ -253,7 +253,7 @@ class _AuthenticationScreensState extends State<AuthenticationScreens>
                         ),
                         Expanded(
                           child: Text(
-                            'Welcome',
+                            'Bienvenue',
                             style: theme.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: theme.colorScheme.onSurface,
@@ -323,7 +323,7 @@ class _AuthenticationScreensState extends State<AuthenticationScreens>
                                   ),
                                   SizedBox(height: 1.h),
                                   Text(
-                                    'Votre compagnon nutritionnel IA personnel',
+                                    'Votre compagnon nutrition personnel',
                                     style: theme.textTheme.bodyLarge?.copyWith(
                                       color: theme.colorScheme.onSurfaceVariant,
                                       fontWeight: FontWeight.w500,
@@ -391,11 +391,11 @@ class _AuthenticationScreensState extends State<AuthenticationScreens>
                                 tabs: [
                                   Tab(
                                     height: 6.h,
-                                    child: const Text('Login'),
+                                    child: const Text('Connexion'),
                                   ),
                                   Tab(
                                     height: 6.h,
-                                    child: const Text('S\'enregistrer'),
+                                    child: const Text('Inscription'),
                                   ),
                                 ],
                               ),
